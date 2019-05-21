@@ -4,7 +4,7 @@
 \alias{samp_bf}
 \title{Sample multiple datasets and compute the Bayes factor in each}
 \usage{
-samp_bf(datasets, n, ngroup, means, sds, h1, h2, comp)
+samp_bf(datasets, n, ngroup, means, sds, h1, h2, comp, nsamp)
 }
 \arguments{
 \item{datasets}{A number. The number of datasets to simulate for each
@@ -23,7 +23,9 @@ Note, when standardized, this is a vector of 1s}
 
 \item{h2}{A constraint matrix defining H2.}
 
-\item{comp}{A vector of the complexities of H1 and H2.
+\item{comp}{A vector of the complexities of H1 and H2.}
+
+\item{nsamp}{A number. The number of samples for the fit and complexity
 See \code{?BayesianPower::calc_fc}}
 }
 \value{

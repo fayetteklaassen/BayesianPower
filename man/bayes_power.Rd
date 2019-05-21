@@ -46,16 +46,16 @@ Determine the 'power' for a Bayesian hypothesis test
 }
 \examples{
 # Example 1 H1 vs Hc
+h1 <- matrix(c(1,-1,0,0,1,-1), nrow= 2, byrow= TRUE)
+h2 <- "c"
 m1 <- c(.4,.2,0)
 m2 <- c(.2,0,.1)
-h1 <- matrix(c(1,-1,0,0,1,-1), nrow= 2, byrow= TRUE)
-h2 <- 'c'
-bayes_power(40, m1, m2, h1, h2)
+bayes_power(40, h1, h2, m1, m2)
 
 # Example 2 H1 vs H2
-m1 <- c(.7,.3,.1,0)
-m2 <- c(0,.4,.5,.1)
 h1 <- matrix(c(1,-1,0,0,0,1,-1,0,0,0,1,-1), nrow= 3, byrow= TRUE)
 h2 <- matrix(c(0,-1,1,0,0,1,0,-1,-1,0,0,1), nrow = 3, byrow= TRUE)
-bayes_power(40, m1, m2, h1, h2)
+m1 <- c(.7,.3,.1,0)
+m2 <- c(0,.4,.5,.1)
+bayes_power(40, h1, h2, m1, m2)
 }

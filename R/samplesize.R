@@ -42,7 +42,7 @@ bayes_sampsize <- function(h1, h2, m1, m2,
                         minss = 2, maxss = 1000, seed = 31) {
   # Errors ====
   if(!is.numeric(cutoff)) stop("expected numeric value")
-  if(!is.integer(minss) || !is.integer(maxss)) stop("minss and maxss must be integer")
+  if(!is.numeric(minss) || !is.numeric(maxss)) stop("minss and maxss must be integer")
 
   types <- c("1", "2", "de", "aoi", "med.1", "med.2")
   if(all(types != type)) stop("Incorrect type specified")
@@ -59,7 +59,7 @@ bayes_sampsize <- function(h1, h2, m1, m2,
   times <- c(ceiling(log(maxss) / log(minss + 1)) + 1)
   timesT <- 0
   {
-    pb <- txtProgressBar(min = 0, max = times)
+    pb <- utils::txtProgressBar(min = 0, max = times)
 
     set.seed(seed)
     n <- round(maxss / 2)
@@ -89,7 +89,7 @@ bayes_sampsize <- function(h1, h2, m1, m2,
       if (errors[[paste(type)]] == cutoff) break
 
       timesT <- timesT + 1
-        setTxtProgressBar(pb, timesT)
+        utils::setTxtProgressBar(pb, timesT)
     }
     close(pb)
   }
@@ -124,7 +124,7 @@ bayes_sampsize <- function(h1, h2, m1, m2,
 #' @examples
 #' # Example 1 H1 vs Hc
 #' h1 <- matrix(c(1,-1,0,0,1,-1), nrow= 2, byrow= TRUE)
-#' h2 <- 'c'
+#' h2 <- "c"
 #' m1 <- c(.4,.2,0)
 #' m2 <- c(.2,0,.1)
 #' bayes_power(40, h1, h2, m1, m2)
@@ -143,17 +143,18 @@ bayes_power <- function(n, h1, h2, m1, m2,
                         seed = NULL){
 
   # Errors ====
-  if(!is.integer(datasets) || !is.numeric(bound1) || !is.integer(n) ||
-     !is.numeric(bound2) || !is.integer(nsamp) ||
-     !is.numeric(m1) || !is.numeric(m2) || !is.numeric(h1)) {
+  if(!is.numeric(bound1) || !is.numeric(bound2) ||
+     !is.numeric(m1) || !is.numeric(m2) || !is.numeric(h1) ||
+     !is.numeric(datasets) || !is.numeric(n) ||
+     !is.numeric(nsamp)) {
     stop("expected numeric value")
   }
-    if(length(dim(hyp)) != 2) stop("h1 must be a matrix")
+    if(length(dim(h1)) != 2) stop("h1 must be a matrix")
 
-  if(is.numeric(hyp2)){
-    if(length(dim(hyp2)) != 2) stop("h2 must be a matrix")
+  if(is.numeric(h2)){
+    if(length(dim(h2)) != 2) stop("h2 must be a matrix")
   } else {
-    if(hyp2 != "c" && hyp2 != "u") stop("Use 'u' or 'c' for unconstrained or complement.")
+    if(h2 != "c" && h2 != "u") stop("Use 'u' or 'c' for unconstrained or complement.")
   }
 
   if(length(m1) != length(m2)) stop("m1 and m2 must be the same length")
@@ -179,8 +180,8 @@ bayes_power <- function(n, h1, h2, m1, m2,
     if(!is.numeric(comp)) stop("comp must be numeric")
   }
 
-  BF1 <- samp_bf(datasets, n, ngroup, means = m1, sds = 1, h1, h2, comp)
-  BF2 <- samp_bf(datasets, n, ngroup, means = m2, sds = 1, h1, h2, comp)
-  errors <- error(BF1, BF2, bound1, bound2)
+  BF1 <- samp_bf(datasets, n, ngroup, means = m1, sds = 1, h1, h2, comp, nsamp)
+  BF2 <- samp_bf(datasets, n, ngroup, means = m2, sds = 1, h1, h2, comp, nsamp)
+  errors <- bayes_error(BF1, BF2, bound1, bound2)
   return(errors)
 }

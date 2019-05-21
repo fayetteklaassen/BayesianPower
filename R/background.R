@@ -47,7 +47,7 @@ samp_dist <- function(nsamp, means, sds) {
   # Function ====
   ngroup <- length(means)
 
-  samples <- matrix(rnorm(nsamp * ngroup,
+  samples <- matrix(stats::rnorm(nsamp * ngroup,
                           mean = means,
                           sd = sds),
                     ncol = ngroup,
@@ -58,7 +58,7 @@ samp_dist <- function(nsamp, means, sds) {
 # Documentation calc_fc() ====
 #' Compute the complexity or fit for two hypotheses.
 #' @param hyp A constraint matrix defining H1.
-#' @param hyps2 A constraint matrix defining H2 OR a character \code{'u'}
+#' @param hyp2 A constraint matrix defining H2 OR a character \code{'u'}
 #' or \code{'c'} specifying an unconstrained or complement hypothesis
 #' @param means A vector of posterior or prior means
 #' @param sds A vector or posterior or prior standard deviation
@@ -66,23 +66,6 @@ samp_dist <- function(nsamp, means, sds) {
 #' fit and complexity
 #' @return A vector.
 #' The proportion of posterior samples in agreement with H1 and with H2
-#' @examples
-#' # Complexity
-#' priormeans <- c(0,0,0)
-#' priorsds <- c(1,1,1)
-#' h1 <- matrix(c(1,-1,0,0,1,-1), nrow= 2, byrow= TRUE)
-#' h2 <- 'c'
-#' complexity <- calc_fc(h1, h2, priormeans, priorsds)
-#'
-#' # Fit
-#' truemeans <- c(.4, .2, 0)
-#' n <- 30
-#' ngroup <- length(truemeans)
-#' dat <- matrix(rnorm(n * ngroup, truemeans), ncol = ngroup, byrow = TRUE)
-#' postmeans <- colMeans(dat)
-#' postsds <- apply(dat, 2, sd)/sqrt(n)
-#' fit <- calc_fc(h1, h2, postmeans, postsds)
-#'
 calc_fc <- function(hyp, hyp2, means, sds, nsamp = 1000) {
   # Errors ====
   if(is.numeric(hyp2)){
@@ -121,7 +104,7 @@ calc_fc <- function(hyp, hyp2, means, sds, nsamp = 1000) {
 calc_bf <- function(data, h1, h2, comp, nsamp = 1000) {
   # Function ====
   postmeans <- colMeans(data)
-  postsds <- apply(data, 1, sd) / sqrt(nrow(data))
+  postsds <- apply(data, 1, stats::sd) / sqrt(nrow(data))
   fit <- calc_fc(h1, h2, postmeans, postsds, nsamp)
   bf <- (fit[1] / comp[1]) / (fit[2] / comp[2])
   return(bf)
@@ -140,12 +123,13 @@ calc_bf <- function(data, h1, h2, comp, nsamp = 1000) {
 #' @param h1 A constraint matrix defining H1.
 #' @param h2 A constraint matrix defining H2.
 #' @param comp A vector of the complexities of H1 and H2.
+#' @param nsamp A number. The number of samples for the fit and complexity
 #' See \code{?BayesianPower::calc_fc}
 #' @return A vector of Bayes factors BF12 for each of the simulated datasets
-samp_bf <- function(datasets, n, ngroup, means, sds, h1, h2, comp) {
+samp_bf <- function(datasets, n, ngroup, means, sds, h1, h2, comp, nsamp) {
   # Function ====
   out <- sapply(1:datasets, function(i){
-    data <- matrix(rnorm(n * ngroup, mean = means, sd = 1),
+    data <- matrix(stats::rnorm(n * ngroup, mean = means, sd = 1),
                    ncol = ngroup,
                    byrow = TRUE)
     calc_bf(data = data, h1, h2, comp, nsamp)
@@ -175,8 +159,8 @@ bayes_error <- function(BFs1, BFs2, bound1 = 1, bound2 = 1/bound1) {
   } else {
     0
   }
-  med.2.inv <- 1/median(BFs2)
-  med.1 <- median(BFs1)
+  med.2.inv <- 1 / stats::median(BFs2)
+  med.1 <- stats::median(BFs1)
   return(c("1" = type1, "2" = type2, "de" = de, "aoi" = aoi,
            "med.1" = med.1, "med.2 inverse" = med.2.inv))
 }

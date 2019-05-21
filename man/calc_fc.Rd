@@ -9,15 +9,15 @@ calc_fc(hyp, hyp2, means, sds, nsamp = 1000)
 \arguments{
 \item{hyp}{A constraint matrix defining H1.}
 
+\item{hyp2}{A constraint matrix defining H2 OR a character \code{'u'}
+or \code{'c'} specifying an unconstrained or complement hypothesis}
+
 \item{means}{A vector of posterior or prior means}
 
 \item{sds}{A vector or posterior or prior standard deviation}
 
 \item{nsamp}{A number. The number of prior or posterior samples to determine the
 fit and complexity}
-
-\item{hyps2}{A constraint matrix defining H2 OR a character \code{'u'}
-or \code{'c'} specifying an unconstrained or complement hypothesis}
 }
 \value{
 A vector.
