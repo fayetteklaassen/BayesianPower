@@ -18,7 +18,7 @@ used for each group.}
 }
 \value{
 A matrix of \code{nsamp} rows and as many columns as the
-length of \code{means}. Posterior or prior samples
+length of \code{means}.
 }
 \description{
 Sample from prior or posterior distribution

@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{eval_const}
 \alias{eval_const}
-\title{Evaluate a contraint matrix for a set of prior/posterior samples}
+\title{Evaluate a constraint matrix for a set of prior/posterior samples}
 \usage{
 eval_const(hyp, samples)
 }
@@ -17,5 +17,5 @@ A number between 0 and 1. The proportion of samples in which the
 constraints are met.
 }
 \description{
-Evaluate a contraint matrix for a set of prior/posterior samples
+Evaluate a constraint matrix for a set of prior/posterior samples
 }

@@ -1,5 +1,5 @@
 # Documentation eval_const() ====
-#' Evaluate a contraint matrix for a set of prior/posterior samples
+#' Evaluate a constraint matrix for a set of prior/posterior samples
 #'
 #' @param hyp A constraint matrix defining a hypothesis.
 #' @param samples A matrix. Prior or posterior samples, the number of columns
@@ -42,7 +42,7 @@ eval_const <- function(hyp, samples) {
 #' If a number is used, the same prior or posterior standard deviation is
 #' used for each group.
 #' @return A matrix of \code{nsamp} rows and as many columns as the
-#' length of \code{means}. Posterior or prior samples
+#' length of \code{means}.
 samp_dist <- function(nsamp, means, sds) {
   # Function ====
   ngroup <- length(means)
@@ -146,7 +146,7 @@ samp_bf <- function(datasets, n, ngroup, means, sds, h1, h2, comp, nsamp) {
 #' @param BFs2 A vector. Simulated BF12 under H2 for a given n
 #' @param bound1 A number. The boundary above which BF12 favors H1
 #' @param bound2 A number. The boundary below which BF12 favors H2
-#' @return A named vector. The Type 1, Type 2, DE, AOI error probabilities
+#' @return A named vector. The Type 1, Type 2, Decision error and Area of Indecision probabilities
 #' and the median Bayes factors under H1 and H2
 bayes_error <- function(BFs1, BFs2, bound1 = 1, bound2 = 1/bound1) {
   # Function ====

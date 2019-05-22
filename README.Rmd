@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 The goal of BayesianPower is to determine the required sample size or the unconditional and conditional error probabilities when a hypothesis that imposes inequality constraints between group means is compared with its complement, another inequality constraint hypothesis or the unconstrained hypothesis. 
-[Klaassen, Hoijtink & Gu (unpublished)](10.17605/OSF.IO/D9EAJ) describe four methods of weighing unconditional or conditional error probabilities to determine the sample size. Reversely, the same rules can be applied to determine the `power' of a study.
+[Klaassen, Hoijtink & Gu (unpublished)](10.17605/OSF.IO/D9EAJ) describe four methods of weighing unconditional or conditional error probabilities to determine the sample size. Reversely, the same rules can be applied to determine the power of a study.
 
 ## Installation
 

@@ -20,7 +20,7 @@
 #' @param maxss A number. The maximum sample size to consider
 #' @param seed A number. The random seed to be set
 #' @return The sample size for which the chosen type of error probability
-#' is at the set cutoff, and the according error probabilities and median BFs
+#' is at the set cutoff, and the according error probabilities and median Bayes factors
 #' @examples
 #' # Example 1 Decision error and Hc
 #' h1 <- matrix(c(1,-1,0,0,1,-1), nrow= 2, byrow= TRUE)
@@ -120,7 +120,7 @@ bayes_sampsize <- function(h1, h2, m1, m2,
 #' @param nsamp A number. The number of prior or posterior samples to determine the
 #' fit and complexity
 #' @param seed A number. The random seed to be set
-#' @return The Type 1, Type 2, DE and AOI error probability and
+#' @return The Type 1, Type 2, Decision error and Area of Indecision probability and
 #' the median BF12s under H1 and H2
 #' @examples
 #' # Example 1 H1 vs Hc

@@ -38,7 +38,7 @@ fit and complexity}
 \item{seed}{A number. The random seed to be set}
 }
 \value{
-The Type 1, Type 2, DE and AOI error probability and
+The Type 1, Type 2, Decision error and Area of Indecision probability and
 the median BF12s under H1 and H2
 }
 \description{

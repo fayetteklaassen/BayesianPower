@@ -17,7 +17,7 @@ bayes_error(BFs1, BFs2, bound1 = 1, bound2 = 1/bound1)
 \item{bound2}{A number. The boundary below which BF12 favors H2}
 }
 \value{
-A named vector. The Type 1, Type 2, DE, AOI error probabilities
+A named vector. The Type 1, Type 2, Decision error and Area of Indecision probabilities
 and the median Bayes factors under H1 and H2
 }
 \description{

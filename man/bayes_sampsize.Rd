@@ -42,7 +42,7 @@ fit and complexity}
 }
 \value{
 The sample size for which the chosen type of error probability
-is at the set cutoff, and the according error probabilities and median BFs
+is at the set cutoff, and the according error probabilities and median Bayes factors
 }
 \description{
 Determine the required sample size for a Bayesian hypothesis test

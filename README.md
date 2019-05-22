@@ -14,8 +14,8 @@ its complement, another inequality constraint hypothesis or the
 unconstrained hypothesis. [Klaassen, Hoijtink & Gu
 (unpublished)](10.17605/OSF.IO/D9EAJ) describe four methods of weighing
 unconditional or conditional error probabilities to determine the sample
-size. Reversely, the same rules can be applied to determine the \`power’
-of a study.
+size. Reversely, the same rules can be applied to determine the power of
+a study.
 
 ## Installation
 
