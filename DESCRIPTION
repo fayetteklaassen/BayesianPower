@@ -16,6 +16,5 @@ RoxygenNote: 6.1.1
 Suggests: 
     knitr,
     rmarkdown,
-    testthat,
-    qpdf
+    testthat
 VignetteBuilder: knitr

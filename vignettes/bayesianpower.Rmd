@@ -10,7 +10,7 @@ vignette: >
 ---
 ## Introduction
 
-*BayesianPower* can be used for sample size determination (using `bayes_sampsize`) and power calculation (using `bayes_power`) when Bayes factors are used to compare an inequality constrained hypothesis $H_i$ to its complement $H_c$, another inequality constrained hypothesis $H_j$ or the unconstrained hypothesis $H_u$. Power is defined as a combination of controlled error proabilities. The unconditional or conditional error probabilities can be controlled. Four approaches to control these probabilities are available in the methods of this package.
+*BayesianPower* can be used for sample size determination (using `bayes_sampsize`) and power calculation (using `bayes_power`) when Bayes factors are used to compare an inequality constrained hypothesis $H_i$ to its complement $H_c$, another inequality constrained hypothesis $H_j$ or the unconstrained hypothesis $H_u$. Power is defined as a combination of controlled error probabilities. The unconditional or conditional error probabilities can be controlled. Four approaches to control these probabilities are available in the methods of this package.
 **Users are advised to read this vignette and the paper available at <a href = "10.17605/OSF.IO/D9EAJ">10.17605/OSF.IO/D9EAJ</a> where the four available approaches are presented in detail (Klaassen, Hoijtink \& Gu, unpublished)).**
 
 ## Power calculation with `bayes_power()` 
@@ -56,7 +56,7 @@ complexity or fit.
 
 #### Specifying hypotheses
 
-Hypotheses are defined by means of a constraint matrix, that specifcies the ordered constraints between the means $\boldsymbol\mu$ using a constraint matrix $R$, such that $R \boldsymbol{\mu} > \bf{0}$, where $R$ is a matrix with $J$ columns and $K$ rows, where $J$ is the number of group means and $K$ is the number of constraints between the means, $\boldsymbol\mu$ is a vector of $J$ means and $\bf{0}$ is a vector of $K$ zeros.
+Hypotheses are defined by means of a constraint matrix, that specifies the ordered constraints between the means $\boldsymbol\mu$ using a constraint matrix $R$, such that $R \boldsymbol{\mu} > \bf{0}$, where $R$ is a matrix with $J$ columns and $K$ rows, where $J$ is the number of group means and $K$ is the number of constraints between the means, $\boldsymbol\mu$ is a vector of $J$ means and $\bf{0}$ is a vector of $K$ zeros.
 The constraint matrix $R$ contains a set of linear inequality constraints.
 
 Consider
@@ -72,13 +72,13 @@ R %*% mu
 The matrix $R$ specifies that the sum of $1 \times \mu_1$ and $-1 \times \mu_2$ and $0 \times \mu_3$ is larger than $0$, **and** the sum of $0 \times \mu_1$ and $1 \times \mu_2$ and $-1 \times \mu_3$ is larger than $0$. This can also be written as: $\mu_1 > \mu_2 > \mu_3$. For more information about the specification of constraint matrices, see for example [@hoijtink12book].
 
 The argument `h1` has to be a constraint matrix as specified above.
-The arugment `h2` can be either a constraint matrix, or the character `'u'` or `'c'` if the goal is to compare $H_1$ with $H_u$, the unconstrained hypothesis, or $H_c$ the complement hypothesis.
+The argument `h2` can be either a constraint matrix, or the character `'u'` or `'c'` if the goal is to compare $H_1$ with $H_u$, the unconstrained hypothesis, or $H_c$ the complement hypothesis.
 
 #### Specifying population means
 Hypothesized population means have to be defined under $H_1$ and $H_2$, also if $H_u$ or $H_c$ are considered as $H_2$. The population means have to be standardized. 
 
 #### Computing complexity
-If the complexity of a hypthesis is known it can be specified under `comp` to reduce computational time. If `comp = NULL` the complexity is sampled using $\mu_{\cdot} \sim \mathcal{N}(0,1000)$ as a prior distribution for each mean, that is, a normal distribution with mean $0$ and standard deviation $1000$.
+If the complexity of a hypothesis is known it can be specified under `comp` to reduce computational time. If `comp = NULL` the complexity is sampled using $\mu_{\cdot} \sim \mathcal{N}(0,1000)$ as a prior distribution for each mean, that is, a normal distribution with mean $0$ and standard deviation $1000$.
 
 #### Setting bounds
 `bound1` and `bound2` describe the boundary used for interpreting a Bayes factor. If `bound1 = 1`, all $BF_{12} > 1$ are considered to express evidence in favor of $H_1$, if `bound1 = 3`, all $BF_{12} > 3$ are considered to express evidence in favor of $H_1$.
@@ -86,8 +86,8 @@ Similarly, `bound2` is the boundary *below* which $BF_{12}$ is considered to exp
 
 ### Examples
 
-#### Example 1. H1 vs Hc
-An example where three group means are ordered in $H_1: \mu_1 > \mu_2 > \mu_3$ which is compared to its complement. The power is deteremined for $n = 40$
+#### Example 1. $H_1$ vs $H_c$
+An example where three group means are ordered in $H_1: \mu_1 > \mu_2 > \mu_3$ which is compared to its complement. The power is determined for $n = 40$
 ```{r, eval = FALSE}
 h1 <- matrix(c(1,-1,0,0,1,-1), nrow= 2, byrow= TRUE)
 h2 <- 'c'
@@ -132,10 +132,10 @@ If `type` is `"med.1"` or `"med.2"`, `cutoff` must be larger than $1$. See below
 `bayes_sampsize()` iteratively uses `bayes_power()` to determine the error probabilities for a sample size, evaluates whether the chosen error is below the cutoff, and adjusts the sample size.
 
 #### `type`
-[@klaassenPIH] describes in detail the different types of controlling error probabilities that can be considered. Specifying `"1"` or `"2"` indicates that the Type 1 or Type 2 error probability has to be controlled, respectively the probability of concluding $H_2$ is the best hypothesis when $H_1$ is true or concluding that $H_1$ is the best hypothesis when $H_2$ is true. Note that when $H_1$ or $H_2$ is considered the best hypothesis depends on the values chosen for `bound1` and `bound2`. Specifying `"de"` or `"aoi" ` indicates that the Decision error probability (average of Type 1 and Type 2) or the probability of Indecision has to be controlled. Finally, specifying `" med.1"` or `"med.2"` indicates the minimum desired median $BF_{12}$ when $H_1$ is true, or the minumum desired median $BF_{21}$ when $H_2$ is true.
+[@klaassenPIH] describes in detail the different types of controlling error probabilities that can be considered. Specifying `"1"` or `"2"` indicates that the Type 1 or Type 2 error probability has to be controlled, respectively the probability of concluding $H_2$ is the best hypothesis when $H_1$ is true or concluding that $H_1$ is the best hypothesis when $H_2$ is true. Note that when $H_1$ or $H_2$ is considered the best hypothesis depends on the values chosen for `bound1` and `bound2`. Specifying `"de"` or `"aoi" ` indicates that the Decision error probability (average of Type 1 and Type 2) or the probability of Indecision has to be controlled. Finally, specifying `" med.1"` or `"med.2"` indicates the minimum desired median $BF_{12}$ when $H_1$ is true, or the minimum desired median $BF_{21}$ when $H_2$ is true.
 
 ### Examples
-#### Example 1. H1 versus Hc, controlling decision error
+#### Example 1. $H_1$ versus $H_c$, controlling decision error
 ```{r, eval = FALSE}
 h1 <- matrix(c(1, -1, 0,
                0, 1, -1), 
@@ -161,7 +161,7 @@ m2 <- c(0, .4, .5, .1)
 bayes_sampsize(h1, h2, m1, m2, type = "aoi", cutoff = .2, minss = 2, maxss = 500)
 ```
 
-#### Example 3. H1 versus Hu, controlling median Bayes factor
+#### Example 3. $H_1$ versus $H_u$, controlling median Bayes factor
 ```{r, eval = FALSE}
 h1 <- matrix(c(1, -1, 0, 0,
                0, 1, -1, 0,
@@ -176,4 +176,4 @@ bayes_sampsize(h1, h2, m1, m2, type = "med.1", cutoff = 3, minss = 2, maxss = 50
 ## References
 Hoijtink, H. (2012). *Informative hypotheses. Theory and practice for behavioral and social scientists.* Boca Raton: Chapman  Hall/CRC.
 
-Klaassen, F., Hoijtink, H.,  Gu, X. (unpulished). *The power of informative hypotheses.* Pre-print available at <a href = "10.17605/OSF.IO/D9EAJ">10.17605/OSF.IO/D9EAJ</a>
+Klaassen, F., Hoijtink, H.,  Gu, X. (unpublished). *The power of informative hypotheses.* Pre-print available at <a href = "10.17605/OSF.IO/D9EAJ">10.17605/OSF.IO/D9EAJ</a>
