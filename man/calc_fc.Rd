@@ -26,21 +26,3 @@ The proportion of posterior samples in agreement with H1 and with H2
 \description{
 Compute the complexity or fit for two hypotheses.
 }
-\examples{
-# Complexity
-priormeans <- c(0,0,0)
-priorsds <- c(1,1,1)
-h1 <- matrix(c(1,-1,0,0,1,-1), nrow= 2, byrow= TRUE)
-h2 <- 'c'
-complexity <- calc_fc(h1, h2, priormeans, priorsds)
-
-# Fit
-truemeans <- c(.4, .2, 0)
-n <- 30
-ngroup <- length(truemeans)
-dat <- matrix(rnorm(n * ngroup, truemeans), ncol = ngroup, byrow = TRUE)
-postmeans <- colMeans(dat)
-postsds <- apply(dat, 2, sd)/sqrt(n)
-fit <- calc_fc(h1, h2, postmeans, postsds)
-
-}

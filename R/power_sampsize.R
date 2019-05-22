@@ -149,10 +149,15 @@ bayes_power <- function(n, h1, h2, m1, m2,
      !is.numeric(nsamp)) {
     stop("expected numeric value")
   }
-    if(length(dim(h1)) != 2) stop("h1 must be a matrix")
+  if(round(n) != n) stop("n must be integer")
+  if(length(dim(h1)) != 2) stop("h1 must be a matrix")
+  if(any(round(h1) != h1)) stop("h1 can only contain integers")
+  if(any(h1 > 1) || any(h1 < -1)) stop( "h1 must consist of 1 -1 and 0")
 
   if(is.numeric(h2)){
     if(length(dim(h2)) != 2) stop("h2 must be a matrix")
+    if(any(round(h2) != h2)) stop("h2 can only contain integers")
+    if(any(h2 > 1) || any(h2 < -1)) stop( "h2 must consist of 1 -1 and 0")
   } else {
     if(h2 != "c" && h2 != "u") stop("Use 'u' or 'c' for unconstrained or complement.")
   }
