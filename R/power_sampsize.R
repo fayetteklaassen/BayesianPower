@@ -27,14 +27,15 @@
 #' h2 <- 'c'
 #' m1 <- c(.4,.2,0)
 #' m2 <- c(.2,0,.1)
-#' bayes_sampsize(h1, h2, m1, m2, type = "de", cutoff = .125, minss = 2, maxss = 1000, datasets = 100)
+#' bayes_sampsize(h1, h2, m1, m2, "de", .125, 1, 1, 500, 500, 200, 800)
 #'
 #' # Example 2 Indecision error and H2
 #' h1 <- matrix(c(1,-1,0,0,0,1,-1,0,0,0,1,-1), nrow= 3, byrow= TRUE)
 #' h2 <- matrix(c(0,-1,1,0,0,1,0,-1,-1,0,0,1), nrow = 3, byrow= TRUE)
 #' m1 <- c(.7,.3,.1,0)
 #' m2 <- c(0,.4,.5,.1)
-#' bayes_sampsize(h1, h2, m1, m2, type = "aoi", cutoff = .2, minss = 2, maxss = 500, datasets = 1000)
+#' bayes_sampsize(h1, h2, m1, m2, type = "aoi", cutoff = .2, minss = 2,
+#' maxss = 500, datasets = 500, nsamp = 500)
 #' @export
 bayes_sampsize <- function(h1, h2, m1, m2,
                         type = 1, cutoff, bound1 = 1, bound2 = 1 / bound1,
@@ -127,14 +128,14 @@ bayes_sampsize <- function(h1, h2, m1, m2,
 #' h2 <- "c"
 #' m1 <- c(.4,.2,0)
 #' m2 <- c(.2,0,.1)
-#' bayes_power(40, h1, h2, m1, m2)
+#' bayes_power(40, h1, h2, m1, m2, datasets = 500, nsamp = 500)
 #'
 #' # Example 2 H1 vs H2
 #' h1 <- matrix(c(1,-1,0,0,0,1,-1,0,0,0,1,-1), nrow= 3, byrow= TRUE)
 #' h2 <- matrix(c(0,-1,1,0,0,1,0,-1,-1,0,0,1), nrow = 3, byrow= TRUE)
 #' m1 <- c(.7,.3,.1,0)
 #' m2 <- c(0,.4,.5,.1)
-#' bayes_power(40, h1, h2, m1, m2)
+#' bayes_power(40, h1, h2, m1, m2, datasets = 500, nsamp = 500)
 #' @export
 bayes_power <- function(n, h1, h2, m1, m2,
                         ngroup = NULL, comp = NULL,
