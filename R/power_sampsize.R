@@ -22,12 +22,20 @@
 #' @return The sample size for which the chosen type of error probability
 #' is at the set cutoff, and the according error probabilities and median Bayes factors
 #' @examples
+#' # Short computation example NOT SUFFICIENT SAMPLES
+#' h1 <- matrix(c(1,-1), nrow= 1, byrow= TRUE)
+#' h2 <- 'c'
+#' m1 <- c(.4, 0)
+#' m2 <- c(0, .1)
+#' bayes_sampsize(h1, h2, m1, m2, "de", .125, nsamp = 50, datasets = 50,
+#' minss = 40, maxss = 70)
+#' \donttest{
 #' # Example 1 Decision error and Hc
 #' h1 <- matrix(c(1,-1,0,0,1,-1), nrow= 2, byrow= TRUE)
 #' h2 <- 'c'
 #' m1 <- c(.4,.2,0)
 #' m2 <- c(.2,0,.1)
-#' bayes_sampsize(h1, h2, m1, m2, "de", .125, 1, 1, 500, 500, 200, 800)
+#' bayes_sampsize(h1, h2, m1, m2, "de", .125)
 #'
 #' # Example 2 Indecision error and H2
 #' h1 <- matrix(c(1,-1,0,0,0,1,-1,0,0,0,1,-1), nrow= 3, byrow= TRUE)
@@ -35,7 +43,8 @@
 #' m1 <- c(.7,.3,.1,0)
 #' m2 <- c(0,.4,.5,.1)
 #' bayes_sampsize(h1, h2, m1, m2, type = "aoi", cutoff = .2, minss = 2,
-#' maxss = 500, datasets = 500, nsamp = 500)
+#' maxss = 500)
+#' }
 #' @export
 bayes_sampsize <- function(h1, h2, m1, m2,
                         type = 1, cutoff, bound1 = 1, bound2 = 1 / bound1,
@@ -123,6 +132,13 @@ bayes_sampsize <- function(h1, h2, m1, m2,
 #' @return The Type 1, Type 2, Decision error and Area of Indecision probability and
 #' the median BF12s under H1 and H2
 #' @examples
+#' # Short example WITH SMALL AMOUNT OF SAMPLES
+#' h1 <- matrix(c(1,-1,0,0,1,-1), nrow= 2, byrow= TRUE)
+#' h2 <- "c"
+#' m1 <- c(.4,.2,0)
+#' m2 <- c(.2,0,.1)
+#' bayes_power(40, h1, h2, m1, m2, datasets = 50, nsamp = 50)
+#' \donttest{
 #' # Example 1 H1 vs Hc
 #' h1 <- matrix(c(1,-1,0,0,1,-1), nrow= 2, byrow= TRUE)
 #' h2 <- "c"
@@ -136,6 +152,7 @@ bayes_sampsize <- function(h1, h2, m1, m2,
 #' m1 <- c(.7,.3,.1,0)
 #' m2 <- c(0,.4,.5,.1)
 #' bayes_power(40, h1, h2, m1, m2, datasets = 500, nsamp = 500)
+#' }
 #' @export
 bayes_power <- function(n, h1, h2, m1, m2,
                         ngroup = NULL, comp = NULL,

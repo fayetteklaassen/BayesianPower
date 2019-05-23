@@ -1,7 +1,7 @@
 Package: BayesianPower
 Type: Package
 Title: Sample Size and Power for Comparing Inequality Constrained Hypotheses
-Version: 0.1.0
+Version: 0.1.1
 Author: Fayette Klaassen
 Maintainer: Fayette Klaassen <klaassen.fayette@gmail.com>
 Description: A collection of methods to determine the required sample size for
