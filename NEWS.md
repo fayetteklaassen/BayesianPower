@@ -1,5 +1,12 @@
 # NEWS for BayesianPower
 
+# BayesianPower 0.1.1
+
+## Minor changes
+Changed examples for submission to CRAN. Long examples are wrapped in donttest, 
+short examples are added to enable quick testing of functionality.
+
+
 # BayesianPower 0.1.0
 
 ## Major changes
