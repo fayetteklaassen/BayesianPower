@@ -1,5 +1,10 @@
 # NEWS for BayesianPower
 
+# BayesianPower 0.1.2
+
+## Minor changes
+Added reference to functionality of package in Description.
+
 # BayesianPower 0.1.1
 
 ## Minor changes
