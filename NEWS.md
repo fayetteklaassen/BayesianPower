@@ -1,5 +1,10 @@
 # NEWS for BayesianPower
 
+# BayesianPower 0.1.3
+
+## Minor changes
+End description with a full stop.
+
 # BayesianPower 0.1.2
 
 ## Minor changes
