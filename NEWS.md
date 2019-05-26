@@ -1,5 +1,10 @@
 # NEWS for BayesianPower
 
+# BayesianPower 0.1.5
+
+## Minor changes
+Doi link in vignette html.
+
 # BayesianPower 0.1.4
 
 ## Minor changes

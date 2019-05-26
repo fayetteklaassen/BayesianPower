@@ -176,4 +176,4 @@ bayes_sampsize(h1, h2, m1, m2, type = "med.1", cutoff = 3, minss = 2, maxss = 50
 ## References
 Hoijtink, H. (2012). *Informative hypotheses. Theory and practice for behavioral and social scientists.* Boca Raton: Chapman  Hall/CRC.
 
-Klaassen, F., Hoijtink, H.,  Gu, X. (unpublished). *The power of informative hypotheses.* Pre-print available at <a href = "10.17605/OSF.IO/D9EAJ">10.17605/OSF.IO/D9EAJ</a>
+Klaassen, F., Hoijtink, H.,  Gu, X. (unpublished). *The power of informative hypotheses.* Pre-print available at <a href = "https://doi.org/10.17605/OSF.IO/D9EAJ">https://doi.org/10.17605/OSF.IO/D9EAJ</a>
