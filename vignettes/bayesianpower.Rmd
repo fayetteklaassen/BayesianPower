@@ -11,7 +11,7 @@ vignette: >
 ## Introduction
 
 *BayesianPower* can be used for sample size determination (using `bayes_sampsize`) and power calculation (using `bayes_power`) when Bayes factors are used to compare an inequality constrained hypothesis $H_i$ to its complement $H_c$, another inequality constrained hypothesis $H_j$ or the unconstrained hypothesis $H_u$. Power is defined as a combination of controlled error probabilities. The unconditional or conditional error probabilities can be controlled. Four approaches to control these probabilities are available in the methods of this package.
-**Users are advised to read this vignette and the paper available at <a href = "10.17605/OSF.IO/D9EAJ">10.17605/OSF.IO/D9EAJ</a> where the four available approaches are presented in detail (Klaassen, Hoijtink \& Gu, unpublished)).**
+**Users are advised to read this vignette and the paper available at <a href = "https://doi.org/10.17605/OSF.IO/D9EAJ">10.17605/OSF.IO/D9EAJ</a> where the four available approaches are presented in detail (Klaassen, Hoijtink \& Gu, unpublished)).**
 
 ## Power calculation with `bayes_power()` 
 
