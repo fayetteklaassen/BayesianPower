@@ -79,22 +79,4 @@ m2 <- c(0, .1)
 bayes_sampsize(h1, h2, m1, m2, sd1 = 1, sd2 = 1, scale = 1000,
 type = "de", cutoff = .125, nsamp = 50, datasets = 50,
 minss = 40, maxss = 70)
-\donttest{
-# Example 1 Decision error and Hc
-h1 <- matrix(c(1,-1,0,0,1,-1), nrow= 2, byrow= TRUE)
-h2 <- 'c'
-m1 <- c(.4,.2,0)
-m2 <- c(.2,0,.1)
-bayes_sampsize(h1, h2, m1, m2, sd1 = 1, sd2 = 1, scale = 1000,
-type = "de", cutoff = .125)
-
-# Example 2 Indecision error and H2
-h1 <- matrix(c(1,-1,0,0,0,1,-1,0,0,0,1,-1), nrow= 3, byrow= TRUE)
-h2 <- matrix(c(0,-1,1,0,0,1,0,-1,-1,0,0,1), nrow = 3, byrow= TRUE)
-m1 <- c(.7,.3,.1,0)
-m2 <- c(0,.4,.5,.1)
-bayes_sampsize(h1, h2, m1, m2, sd1 = 1, sd2 = 1, scale = 1000,
-type = "aoi", cutoff = .2, minss = 2,
-maxss = 500)
-}
 }
