@@ -4,9 +4,22 @@
 \alias{bayes_power}
 \title{Determine the 'power' for a Bayesian hypothesis test}
 \usage{
-bayes_power(n, h1, h2, m1, m2, ngroup = NULL, comp = NULL,
-  bound1 = 1, bound2 = 1/bound1, datasets = 1000, nsamp = 1000,
-  seed = NULL)
+bayes_power(
+  n,
+  h1,
+  h2,
+  m1,
+  m2,
+  sd1 = 1,
+  sd2 = 1,
+  ngroup = NULL,
+  scale = 1000,
+  bound1 = 1,
+  bound2 = 1/bound1,
+  datasets = 1000,
+  nsamp = 1000,
+  seed = NULL
+)
 }
 \arguments{
 \item{n}{A number. The sample size}
@@ -15,16 +28,21 @@ bayes_power(n, h1, h2, m1, m2, ngroup = NULL, comp = NULL,
 
 \item{h2}{A constraint matrix defining H2}
 
-\item{m1}{A vector of expected population means under H1 (standardized)}
+\item{m1}{A vector of expected population means under H1}
 
-\item{m2}{A vector of expected populations means under H2 (standardized)
+\item{m2}{A vector of expected populations means under H2
 \code{m2} must be of same length as \code{m1}}
+
+\item{sd1}{A vector of standard deviations under H1. Must be a single number (equal
+standard deviation under all populations), or a vector of the same length as \code{m1}}
+
+\item{sd2}{A vector of standard deviations under H2. Must be a single number (equal
+standard deviation under all populations), or a vector of the same length as \code{m2}}
 
 \item{ngroup}{A number or \code{NULL}. The number of groups
 If \code{NULL} the number of groups is determined from the length of \code{m1}}
 
-\item{comp}{A vector or \code{NULL}. The complexity of H1 and H2. If
-\code{NULL} the complexity is also estimated}
+\item{scale}{A number specifying the prior scale}
 
 \item{bound1}{A number. The boundary above which BF12 favors H1}
 

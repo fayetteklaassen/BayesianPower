@@ -6,6 +6,11 @@
 #' @param m1 A vector of expected population means under H1 (standardized).
 #' @param m2 A vector of expected populations means under H2 (standardized).
 #' \code{m2} must be of same length as \code{m1}
+#' @param sd1 A vector of standard deviations under H1. Must be a single number (equal
+#' standard deviation under all populations), or a vector of the same length as \code{m1}
+#' @param sd2 A vector of standard deviations under H2. Must be a single number (equal
+#' standard deviation under all populations), or a vector of the same length as \code{m2}
+#' @param scale A number specifying the prior scale
 #' @param type A character. The type of error to be controlled
 #' options are: \code{"1", "2", "de", "aoi", "med.1", "med.2"}
 #' @param cutoff A number. The cutoff criterion for type.
@@ -27,7 +32,8 @@
 #' h2 <- 'c'
 #' m1 <- c(.4, 0)
 #' m2 <- c(0, .1)
-#' bayes_sampsize(h1, h2, m1, m2, "de", .125, nsamp = 50, datasets = 50,
+#' bayes_sampsize(h1, h2, m1, m2, sd1 = 1, sd2 = 1, scale = 1000,
+#' type = "de", cutoff = .125, nsamp = 50, datasets = 50,
 #' minss = 40, maxss = 70)
 #' \donttest{
 #' # Example 1 Decision error and Hc
@@ -35,18 +41,20 @@
 #' h2 <- 'c'
 #' m1 <- c(.4,.2,0)
 #' m2 <- c(.2,0,.1)
-#' bayes_sampsize(h1, h2, m1, m2, "de", .125)
+#' bayes_sampsize(h1, h2, m1, m2, sd1 = 1, sd2 = 1, scale = 1000,
+#' type = "de", cutoff = .125)
 #'
 #' # Example 2 Indecision error and H2
 #' h1 <- matrix(c(1,-1,0,0,0,1,-1,0,0,0,1,-1), nrow= 3, byrow= TRUE)
 #' h2 <- matrix(c(0,-1,1,0,0,1,0,-1,-1,0,0,1), nrow = 3, byrow= TRUE)
 #' m1 <- c(.7,.3,.1,0)
 #' m2 <- c(0,.4,.5,.1)
-#' bayes_sampsize(h1, h2, m1, m2, type = "aoi", cutoff = .2, minss = 2,
+#' bayes_sampsize(h1, h2, m1, m2, sd1 = 1, sd2 = 1, scale = 1000,
+#' type = "aoi", cutoff = .2, minss = 2,
 #' maxss = 500)
 #' }
 #' @export
-bayes_sampsize <- function(h1, h2, m1, m2,
+bayes_sampsize <- function(h1, h2, m1, m2, sd1 = 1, sd2 = 1, scale = 1000,
                         type = 1, cutoff, bound1 = 1, bound2 = 1 / bound1,
                         datasets = 1000, nsamp = 1000,
                         minss = 2, maxss = 1000, seed = 31) {
@@ -76,14 +84,11 @@ bayes_sampsize <- function(h1, h2, m1, m2,
     oldn <- n + 10
 
     ngroup = length(m1)
-    priormeans <- rep(0, ngroup)
-    priorsd <- rep(1000, ngroup)
-
-    comp <- calc_fc(h1, h2, means = priormeans, sds = priorsd, nsamp = nsamp)
 
     while ((abs(oldn - n) > 1)) {
       errors <- bayes_power(n = n, h1 = h1, h2 = h2, m1 = m1, m2 = m2,
-                            ngroup = ngroup, comp = comp,
+                            sd1 = sd1, sd2 = sd2,
+                            ngroup = ngroup, scale = scale,
                             bound1 = bound1, bound2 = bound2,
                             datasets = datasets, nsamp = nsamp)
       if (errors[[paste(type)]] < cutoff) {
@@ -116,13 +121,16 @@ bayes_sampsize <- function(h1, h2, m1, m2,
 #' @param n A number. The sample size
 #' @param h1 A constraint matrix defining H1
 #' @param h2 A constraint matrix defining H2
-#' @param m1 A vector of expected population means under H1 (standardized)
-#' @param m2 A vector of expected populations means under H2 (standardized)
+#' @param m1 A vector of expected population means under H1
+#' @param m2 A vector of expected populations means under H2
 #' \code{m2} must be of same length as \code{m1}
+#' @param sd1 A vector of standard deviations under H1. Must be a single number (equal
+#' standard deviation under all populations), or a vector of the same length as \code{m1}
+#' @param sd2 A vector of standard deviations under H2. Must be a single number (equal
+#' standard deviation under all populations), or a vector of the same length as \code{m2}
 #' @param ngroup A number or \code{NULL}. The number of groups
 #' If \code{NULL} the number of groups is determined from the length of \code{m1}
-#' @param comp A vector or \code{NULL}. The complexity of H1 and H2. If
-#' \code{NULL} the complexity is also estimated
+#' @param scale A number specifying the prior scale
 #' @param bound1 A number. The boundary above which BF12 favors H1
 #' @param bound2 A number. The boundary below which BF12 favors H2
 #' @param datasets A number. The number of datasets to compute the error probabilities
@@ -155,7 +163,8 @@ bayes_sampsize <- function(h1, h2, m1, m2,
 #' }
 #' @export
 bayes_power <- function(n, h1, h2, m1, m2,
-                        ngroup = NULL, comp = NULL,
+                        sd1 = 1, sd2 = 1,
+                        ngroup = NULL, scale = 1000,
                         bound1 = 1, bound2 = 1/bound1,
                         datasets = 1000, nsamp = 1000,
                         seed = NULL){
@@ -164,7 +173,8 @@ bayes_power <- function(n, h1, h2, m1, m2,
   if(!is.numeric(bound1) || !is.numeric(bound2) ||
      !is.numeric(m1) || !is.numeric(m2) || !is.numeric(h1) ||
      !is.numeric(datasets) || !is.numeric(n) ||
-     !is.numeric(nsamp)) {
+     !is.numeric(nsamp) || !is.numeric(sd1) || !is.numeric(sd2) ||
+     !is.numeric(scale)) {
     stop("expected numeric value")
   }
   if(round(n) != n) stop("n must be integer")
@@ -183,6 +193,13 @@ bayes_power <- function(n, h1, h2, m1, m2,
   if(length(m1) != length(m2)) stop("m1 and m2 must be the same length")
   if(length(m1) != ncol(h1)) stop("h1 and m1 do not match")
 
+  if(length(sd1) != 1){
+    if(length(sd1 != length(m1))) stop("sd1 must be a single number or a vector of same length as m1")
+  }
+  if(length(sd2) != 1){
+    if(length(sd2 != length(m2))) stop("sd2 must be a single number or a vector of same length as m2")
+  }
+
   if(bound1 < bound2) stop("bound1 must be larger than bound2")
 
    # Function ====
@@ -195,16 +212,9 @@ bayes_power <- function(n, h1, h2, m1, m2,
   } else {
     if(!is.integer(ngroup)) stop("ngroup must be integer")
   }
-  if(is.null(comp)) {
-    priormeans <- rep(0, ngroup)
-    priorsd <- rep(1000, ngroup)
-    comp <- calc_fc(h1, h2, means = priormeans, sds = priorsd, nsamp = nsamp)
-  } else {
-    if(!is.numeric(comp)) stop("comp must be numeric")
-  }
 
-  BF1 <- samp_bf(datasets, n, ngroup, means = m1, sds = 1, h1, h2, comp, nsamp)
-  BF2 <- samp_bf(datasets, n, ngroup, means = m2, sds = 1, h1, h2, comp, nsamp)
+  BF1 <- samp_bf(datasets, n, ngroup, means = m1, sds = sd1, h1, h2, scale, nsamp)
+  BF2 <- samp_bf(datasets, n, ngroup, means = m2, sds = sd2, h1, h2, scale, nsamp)
   errors <- bayes_error(BF1, BF2, bound1, bound2)
   return(errors)
 }

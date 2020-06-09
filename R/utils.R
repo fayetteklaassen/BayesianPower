@@ -98,13 +98,17 @@ calc_fc <- function(hyp, hyp2, means, sds, nsamp = 1000) {
 #' @param data A matrix. The dataset for which the BF must be computed
 #' @param h1 A constraint matrix defining H1.
 #' @param h2 A constraint matrix defining H2.
-#' @param comp A vector with the complexity of H1 and H2
+#' @param scale A number specifying the prior scale.
 #' @param nsamp A number. The number of prior or posterior samples to determine the
 #' @return BF12, that is, the evidence for H1 relative to H2
-calc_bf <- function(data, h1, h2, comp, nsamp = 1000) {
+calc_bf <- function(data, h1, h2, scale, nsamp = 1000) {
   # Function ====
   postmeans <- colMeans(data)
   postsds <- apply(data, 1, stats::sd) / sqrt(nrow(data))
+  ngroup <- length(postmeans)
+  priormeans <- rep(0, ngroup)
+  priorsds <- postsds*scale
+  comp <- calc_fc(h1, h2, priormeans, priorsds, nsamp)
   fit <- calc_fc(h1, h2, postmeans, postsds, nsamp)
   bf <- (fit[1] / comp[1]) / (fit[2] / comp[2])
   return(bf)
@@ -117,22 +121,22 @@ calc_bf <- function(data, h1, h2, comp, nsamp = 1000) {
 #' sample size \code{n}
 #' @param n A number. The group sample size to be used in data simulation
 #' @param ngroup A number. The number of groups.
-#' @param means A vector of expected population means (standardized).
-#' @param sds A vector of expected population effect sizes.
+#' @param means A vector of expected population means.
+#' @param sds A vector of expected population standard deviations
 #' Note, when standardized, this is a vector of 1s
 #' @param h1 A constraint matrix defining H1.
 #' @param h2 A constraint matrix defining H2.
-#' @param comp A vector of the complexities of H1 and H2.
+#' @param scale A number specifying the prior scale.
 #' @param nsamp A number. The number of samples for the fit and complexity
 #' See \code{?BayesianPower::calc_fc}
 #' @return A vector of Bayes factors BF12 for each of the simulated datasets
-samp_bf <- function(datasets, n, ngroup, means, sds, h1, h2, comp, nsamp) {
+samp_bf <- function(datasets, n, ngroup, means, sds, h1, h2, scale, nsamp) {
   # Function ====
   out <- sapply(1:datasets, function(i){
-    data <- matrix(stats::rnorm(n * ngroup, mean = means, sd = 1),
+    data <- matrix(stats::rnorm(n * ngroup, mean = means, sd = sds),
                    ncol = ngroup,
                    byrow = TRUE)
-    calc_bf(data = data, h1, h2, comp, nsamp)
+    calc_bf(data = data, h1, h2, scale, nsamp)
   }
   )
   return(out)

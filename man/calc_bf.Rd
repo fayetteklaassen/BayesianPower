@@ -4,7 +4,7 @@
 \alias{calc_bf}
 \title{Compute a Bayes factor}
 \usage{
-calc_bf(data, h1, h2, comp, nsamp = 1000)
+calc_bf(data, h1, h2, scale, nsamp = 1000)
 }
 \arguments{
 \item{data}{A matrix. The dataset for which the BF must be computed}
@@ -13,7 +13,7 @@ calc_bf(data, h1, h2, comp, nsamp = 1000)
 
 \item{h2}{A constraint matrix defining H2.}
 
-\item{comp}{A vector with the complexity of H1 and H2}
+\item{scale}{A number specifying the prior scale.}
 
 \item{nsamp}{A number. The number of prior or posterior samples to determine the}
 }

@@ -4,9 +4,24 @@
 \alias{bayes_sampsize}
 \title{Determine the required sample size for a Bayesian hypothesis test}
 \usage{
-bayes_sampsize(h1, h2, m1, m2, type = 1, cutoff, bound1 = 1,
-  bound2 = 1/bound1, datasets = 1000, nsamp = 1000, minss = 2,
-  maxss = 1000, seed = 31)
+bayes_sampsize(
+  h1,
+  h2,
+  m1,
+  m2,
+  sd1 = 1,
+  sd2 = 1,
+  scale = 1000,
+  type = 1,
+  cutoff,
+  bound1 = 1,
+  bound2 = 1/bound1,
+  datasets = 1000,
+  nsamp = 1000,
+  minss = 2,
+  maxss = 1000,
+  seed = 31
+)
 }
 \arguments{
 \item{h1}{A constraint matrix defining H1.}
@@ -17,6 +32,14 @@ bayes_sampsize(h1, h2, m1, m2, type = 1, cutoff, bound1 = 1,
 
 \item{m2}{A vector of expected populations means under H2 (standardized).
 \code{m2} must be of same length as \code{m1}}
+
+\item{sd1}{A vector of standard deviations under H1. Must be a single number (equal
+standard deviation under all populations), or a vector of the same length as \code{m1}}
+
+\item{sd2}{A vector of standard deviations under H2. Must be a single number (equal
+standard deviation under all populations), or a vector of the same length as \code{m2}}
+
+\item{scale}{A number specifying the prior scale}
 
 \item{type}{A character. The type of error to be controlled
 options are: \code{"1", "2", "de", "aoi", "med.1", "med.2"}}
@@ -53,7 +76,8 @@ h1 <- matrix(c(1,-1), nrow= 1, byrow= TRUE)
 h2 <- 'c'
 m1 <- c(.4, 0)
 m2 <- c(0, .1)
-bayes_sampsize(h1, h2, m1, m2, "de", .125, nsamp = 50, datasets = 50,
+bayes_sampsize(h1, h2, m1, m2, sd1 = 1, sd2 = 1, scale = 1000,
+type = "de", cutoff = .125, nsamp = 50, datasets = 50,
 minss = 40, maxss = 70)
 \donttest{
 # Example 1 Decision error and Hc
@@ -61,14 +85,16 @@ h1 <- matrix(c(1,-1,0,0,1,-1), nrow= 2, byrow= TRUE)
 h2 <- 'c'
 m1 <- c(.4,.2,0)
 m2 <- c(.2,0,.1)
-bayes_sampsize(h1, h2, m1, m2, "de", .125)
+bayes_sampsize(h1, h2, m1, m2, sd1 = 1, sd2 = 1, scale = 1000,
+type = "de", cutoff = .125)
 
 # Example 2 Indecision error and H2
 h1 <- matrix(c(1,-1,0,0,0,1,-1,0,0,0,1,-1), nrow= 3, byrow= TRUE)
 h2 <- matrix(c(0,-1,1,0,0,1,0,-1,-1,0,0,1), nrow = 3, byrow= TRUE)
 m1 <- c(.7,.3,.1,0)
 m2 <- c(0,.4,.5,.1)
-bayes_sampsize(h1, h2, m1, m2, type = "aoi", cutoff = .2, minss = 2,
+bayes_sampsize(h1, h2, m1, m2, sd1 = 1, sd2 = 1, scale = 1000,
+type = "aoi", cutoff = .2, minss = 2,
 maxss = 500)
 }
 }

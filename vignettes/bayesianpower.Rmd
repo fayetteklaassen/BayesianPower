@@ -15,8 +15,8 @@ vignette: >
 
 ## Power calculation with `bayes_power()` 
 
-`bayes_power(n, h1, h2, m1, m2,
-  ngroup = NULL, comp = NULL,
+`bayes_power(n, h1, h2, m1, m2, sd1=1, sd2=1,
+  ngroup = NULL, scale = 1000,
   bound1 = 1, bound2 = 1/bound1,
   datasets = 1000, nsamp = 1000,
   seed = NULL)`
@@ -35,11 +35,16 @@ complement hypothesis.
 ` m2` A vector of expected populations means under H2 (standardized).
 ` m2`  must be of same length as ` m1`.
 
+` sd1` A vector of standard deviations under H1. Must be a single number (equal 
+standard deviation under all populations), or a vector of the same length as `m1`
+
+` sd2` A vector of standard deviations under H2. Must be a single number (equal 
+standard deviation under all populations), or a vector of the same length as `m2`
+
 ` ngroup` A number or ` NULL` . The number of groups.
 If ` NULL`  the number of groups is determined from the length of ` m1`. 
 
-` comp` A vector or ` NULL` . The complexity of H1 and H2. If
-` NULL`  the complexity is estimated. See below for more details.
+` scale` A number or use the default `1000` to set the prior scale.
 
 ` bound1` A number. The boundary above which BF12 favors H1, see below for more details.
 
@@ -75,10 +80,10 @@ The argument `h1` has to be a constraint matrix as specified above.
 The argument `h2` can be either a constraint matrix, or the character `'u'` or `'c'` if the goal is to compare $H_1$ with $H_u$, the unconstrained hypothesis, or $H_c$ the complement hypothesis.
 
 #### Specifying population means
-Hypothesized population means have to be defined under $H_1$ and $H_2$, also if $H_u$ or $H_c$ are considered as $H_2$. The population means have to be standardized. 
+Hypothesized population means have to be defined under $H_1$ and $H_2$, also if $H_u$ or $H_c$ are considered as $H_2$. The population means can be standardized, or, alternatively, the group specific standard deviations can be set under `sd1` and `sd2`. 
 
-#### Computing complexity
-If the complexity of a hypothesis is known it can be specified under `comp` to reduce computational time. If `comp = NULL` the complexity is sampled using $\mu_{\cdot} \sim \mathcal{N}(0,1000)$ as a prior distribution for each mean, that is, a normal distribution with mean $0$ and standard deviation $1000$.
+#### Prior scale
+The prior scale can be set using `scale`. By default, a scale of `1000` is used. This implies that the prior covariance matrix is proportional to the standard errors of the sampled data, by a factor of `1000`. 
 
 #### Setting bounds
 `bound1` and `bound2` describe the boundary used for interpreting a Bayes factor. If `bound1 = 1`, all $BF_{12} > 1$ are considered to express evidence in favor of $H_1$, if `bound1 = 3`, all $BF_{12} > 3$ are considered to express evidence in favor of $H_1$.
@@ -109,7 +114,7 @@ bayes_power(34, h1, h2, m1, m2, bound1 = 3, bound2 = 1/3)
 
 ## Sample size determination with `bayes_sampsize()` 
 ` 
-bayes_sampsize(m1, m2, h1, h2,
+bayes_sampsize(h1, h2, m1, m2, sd1 = 1, sd2 = 1, scale = 1000,
   type = 1, cutoff, bound1 = 1, bound2 = 1 / bound1,
   datasets = 1000, nsamp = 1000,
   minss = 2, maxss = 1000, seed = 31)
