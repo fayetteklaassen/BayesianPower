@@ -1,5 +1,9 @@
 # NEWS for BayesianPower
 
+# BayesianPower 0.2.0
+New computation for the complexity. The prior is now scaled to the posterior.
+The option to consider group specific standard deviations is added.
+
 # BayesianPower 0.1.6
 
 ## Minor changes
