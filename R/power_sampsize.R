@@ -94,7 +94,11 @@ bayes_sampsize <- function(h1, h2, m1, m2, sd1 = 1, sd2 = 1, scale = 1000,
            "Type 2 error" = errors[[2]], "Decision error" = errors[[3]],
            "Indecision error" = errors[[4]],
            "Median BF12 under H1" = errors[[5]],
-           "Median BF21 under H2"= 1 / errors[[6]]))
+           "Median BF21 under H2"= 1 / errors[[6]],
+         "10quantile under H1" = errors[[7]],
+         "90quantile under H1" = errors[[8]],
+         "10quantile under H2" = errors[[9]],
+         "90quantile under H2" = errors[[10]]))
 }
 
 # Bayes_power ====

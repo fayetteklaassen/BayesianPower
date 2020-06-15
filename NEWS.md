@@ -1,5 +1,8 @@
 # NEWS for BayesianPower
 
+# BayesianPower 0.2.1
+Power and sample size determination functions now also output the 10% and 90% percentile of the Bayes factor distribution.
+
 # BayesianPower 0.2.0
 New computation for the complexity. The prior is now scaled to the posterior.
 The option to consider group specific standard deviations is added.

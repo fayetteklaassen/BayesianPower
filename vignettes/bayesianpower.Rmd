@@ -80,7 +80,7 @@ The argument `h1` has to be a constraint matrix as specified above.
 The argument `h2` can be either a constraint matrix, or the character `'u'` or `'c'` if the goal is to compare $H_1$ with $H_u$, the unconstrained hypothesis, or $H_c$ the complement hypothesis.
 
 #### Specifying population means
-Hypothesized population means have to be defined under $H_1$ and $H_2$, also if $H_u$ or $H_c$ are considered as $H_2$. The population means can be standardized, or, alternatively, the group specific standard deviations can be set under `sd1` and `sd2`. 
+Hypothesized population means have to be defined under $H_1$ and $H_2$, also if $H_u$ or $H_c$ are considered as $H_2$. The group specific standard deviations can be set under `sd1` and `sd2`, by default, all group standard deviations are $1$.
 
 #### Prior scale
 The prior scale can be set using `scale`. By default, a scale of `1000` is used. This implies that the prior covariance matrix is proportional to the standard errors of the sampled data, by a factor of `1000`. 
