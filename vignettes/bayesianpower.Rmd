@@ -16,10 +16,10 @@ vignette: >
 ## Power calculation with `bayes_power()` 
 
 `bayes_power(n, h1, h2, m1, m2, sd1=1, sd2=1,
-  ngroup = NULL, scale = 1000,
+  scale = 1000,
   bound1 = 1, bound2 = 1/bound1,
   datasets = 1000, nsamp = 1000,
-  seed = NULL)`
+  seed = 31)`
 
 ### Arguments 
 
@@ -40,9 +40,6 @@ standard deviation under all populations), or a vector of the same length as `m1
 
 ` sd2` A vector of standard deviations under H2. Must be a single number (equal 
 standard deviation under all populations), or a vector of the same length as `m2`
-
-` ngroup` A number or ` NULL` . The number of groups.
-If ` NULL`  the number of groups is determined from the length of ` m1`. 
 
 ` scale` A number or use the default `1000` to set the prior scale.
 
