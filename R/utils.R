@@ -170,7 +170,7 @@ bayes_error <- function(BFs1, BFs2, bound1 = 1, bound2 = 1/bound1) {
   perc10.2 <- as.numeric(stats::quantile(BFs2, .10))
   perc90.2 <- as.numeric(stats::quantile(BFs2, .90))
   return(c("1" = type1, "2" = type2, "de" = de, "aoi" = aoi,
-           "med.1" = med.1, "med.2 inverse" = med.2.inv,
+           "med.1" = med.1, "med.2" = med.2.inv,
            "quant10.1" = perc10.1, "quant90.1" = perc90.1,
            "quant10.2" = perc10.2, "quant90.2" = perc90.2))
 }

@@ -1,5 +1,8 @@
 # NEWS for BayesianPower
 
+# BayesianPower 0.2.2
+Seed option in Power function fixed. Approach 3 methodology has been updated to output the median under H2.
+
 # BayesianPower 0.2.1
 Power and sample size determination functions now also output the 10% and 90% percentile of the Bayes factor distribution.
 

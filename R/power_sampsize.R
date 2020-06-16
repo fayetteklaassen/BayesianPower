@@ -69,10 +69,9 @@ bayes_sampsize <- function(h1, h2, m1, m2, sd1 = 1, sd2 = 1, scale = 1000,
 
     while ((abs(oldn - n) > 1)) {
       errors <- bayes_power(n = n, h1 = h1, h2 = h2, m1 = m1, m2 = m2,
-                            sd1 = sd1, sd2 = sd2,
-                            ngroup = ngroup, scale = scale,
+                            sd1 = sd1, sd2 = sd2, scale = scale,
                             bound1 = bound1, bound2 = bound2,
-                            datasets = datasets, nsamp = nsamp)
+                            datasets = datasets, nsamp = nsamp, seed = seed)
       if (errors[[paste(type)]] < cutoff) {
         oldn <- n
         maxss <- n
@@ -114,8 +113,6 @@ bayes_sampsize <- function(h1, h2, m1, m2, sd1 = 1, sd2 = 1, scale = 1000,
 #' standard deviation under all populations), or a vector of the same length as \code{m1}
 #' @param sd2 A vector of standard deviations under H2. Must be a single number (equal
 #' standard deviation under all populations), or a vector of the same length as \code{m2}
-#' @param ngroup A number or \code{NULL}. The number of groups
-#' If \code{NULL} the number of groups is determined from the length of \code{m1}
 #' @param scale A number specifying the prior scale
 #' @param bound1 A number. The boundary above which BF12 favors H1
 #' @param bound2 A number. The boundary below which BF12 favors H2
@@ -134,18 +131,17 @@ bayes_sampsize <- function(h1, h2, m1, m2, sd1 = 1, sd2 = 1, scale = 1000,
 #' bayes_power(40, h1, h2, m1, m2, datasets = 50, nsamp = 50)
 #' @export
 bayes_power <- function(n, h1, h2, m1, m2,
-                        sd1 = 1, sd2 = 1,
-                        ngroup = NULL, scale = 1000,
+                        sd1 = 1, sd2 = 1, scale = 1000,
                         bound1 = 1, bound2 = 1/bound1,
                         datasets = 1000, nsamp = 1000,
-                        seed = NULL){
+                        seed = 31){
 
   # Errors ====
   if(!is.numeric(bound1) || !is.numeric(bound2) ||
      !is.numeric(m1) || !is.numeric(m2) || !is.numeric(h1) ||
      !is.numeric(datasets) || !is.numeric(n) ||
      !is.numeric(nsamp) || !is.numeric(sd1) || !is.numeric(sd2) ||
-     !is.numeric(scale)) {
+     !is.numeric(scale) || !is.numeric(seed)) {
     stop("expected numeric value")
   }
   if(round(n) != n) stop("n must be integer")
@@ -173,16 +169,16 @@ bayes_power <- function(n, h1, h2, m1, m2,
 
   if(bound1 < bound2) stop("bound1 must be larger than bound2")
 
-   # Function ====
-  if(!is.null(seed)) {
-    if(!is.integer(seed)) stop("seed must be integer")
-    set.seed(seed)
-  }
-  if(is.null(ngroup)) {
-    ngroup <- length(m1)
-  } else {
-    if(!is.integer(ngroup)) stop("ngroup must be integer")
-  }
+  #  # Function ====
+  # if(!is.null(seed)) {
+  #   if(!is.integer(seed)) stop("seed must be integer")
+     set.seed(seed)
+  # }
+  # if(is.null(ngroup)) {
+     ngroup <- length(m1)
+  # } else {
+  #   if(!is.integer(ngroup)) stop("ngroup must be integer")
+  # }
 
   BF1 <- samp_bf(datasets, n, ngroup, means = m1, sds = sd1, h1, h2, scale, nsamp)
   BF2 <- samp_bf(datasets, n, ngroup, means = m2, sds = sd2, h1, h2, scale, nsamp)
