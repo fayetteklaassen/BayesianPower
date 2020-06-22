@@ -1,5 +1,9 @@
 # NEWS for BayesianPower
 
+# BayesianPower 0.2.3
+The computation of the indecision probability in Approach 2b has been corrected.
+
+
 # BayesianPower 0.2.2
 Seed option in Power function fixed. Approach 3 methodology has been updated to output the median under H2.
 

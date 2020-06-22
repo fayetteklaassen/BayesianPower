@@ -49,6 +49,7 @@ bayes_sampsize <- function(h1, h2, m1, m2, sd1 = 1, sd2 = 1, scale = 1000,
 
   if(type == "med.1" || type == "med.2") {
     if(cutoff < 1) stop("Cutoff must be larger than 1 for controlling median BF")
+    cutoff <- 1/cutoff
   } else {
     if(cutoff > 1) stop( "Cutoff must be smaller than 1 for controlling error probabilities")
   }
